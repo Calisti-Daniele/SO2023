@@ -12,7 +12,7 @@
 
 int main() {
 
-	startCounting();
+    startCounting();
 
     // Crea un processo figlio per eseguire il comando
     pid_t pid = fork();
@@ -24,7 +24,7 @@ int main() {
 
         int fd = open(FILENAME, O_WRONLY | O_CREAT | O_TRUNC, 0640);
         if(fd<0)
-			err_sys("Cannot open file %s", FILENAME);
+	   err_sys("Cannot open file %s", FILENAME);
 
         //Indico che il mio output di default non è il terminale ma il file ls_output.txt
         dup2(fd, STDOUT_FILENO);
