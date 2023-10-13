@@ -14,17 +14,16 @@
 
 int main() {
 
-
-	startCounting();
-
-	FILE *pipe = popen(COMMAND, "r");
-	int written = 0, bytesToWrites, bytesRead;
-
-
-	if (pipe == NULL) {
-		err_sys("Errore nell'esecuzione del comando");
-		return 1;
-	}
+    startCounting();
+	
+    FILE *pipe = popen(COMMAND, "r");
+    int written = 0, bytesToWrites, bytesRead;
+	
+	
+    if (pipe == NULL) {
+	err_sys("Errore nell'esecuzione del comando");
+	return 1;
+    }
 
 
     // Crea un processo figlio per eseguire il comando
@@ -37,16 +36,16 @@ int main() {
 
         int fd = open(FILENAME, O_WRONLY | O_CREAT | O_TRUNC, 0640);
         if(fd<0)
-			err_sys("Cannot open file %s", FILENAME);
+	   err_sys("Cannot open file %s", FILENAME);
 
         char buf[128];
 
-		while ((bytesRead = read(fileno(pipe), buf, sizeof(buf))) > 0) {
-			int bytesWritten = write(fd, buf, bytesRead);
-			if (bytesWritten < 0) {
-				err_sys("Errore nella scrittura nel file");
-			}
+	while ((bytesRead = read(fileno(pipe), buf, sizeof(buf))) > 0) {
+		int bytesWritten = write(fd, buf, bytesRead);
+		if (bytesWritten < 0) {
+			err_sys("Errore nella scrittura nel file");
 		}
+	}
 
         exit(1);
     } else {  // Processo padre
